@@ -1,0 +1,9 @@
+Import-Module WebAdministration
+
+Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST' `
+  -filter "system.applicationHost/sites/site[@name='Default FTP Site']/ftpServer/connections" `
+  -name "maxConnections" -value 100   # tune for your box
+
+Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST' `
+  -filter "system.applicationHost/sites/site[@name='Default FTP Site']/ftpServer/connections" `
+  -name "resetOnMaxConnections" -value "True"
