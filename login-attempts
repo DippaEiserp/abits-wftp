@@ -1,16 +1,18 @@
 Import-Module WebAdministration
 
-# Enable denyByFailure globally for FTP
 Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST' `
   -filter "system.ftpServer/security/authentication/denyByFailure" `
   -name "enabled" -value "True"
 
-# Max failed logins before block
+# Example: 3 bad tries in 60 seconds → ban 1 hour
 Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST' `
   -filter "system.ftpServer/security/authentication/denyByFailure" `
-  -name "maxFailure" -value 10
+  -name "maxFailure" -value 3
 
-# How long an IP stays blocked
 Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST' `
   -filter "system.ftpServer/security/authentication/denyByFailure" `
-  -name "entryExpiration" -value "08:00:00"   # 8 hours
+  -name "failureInterval" -value "00:01:00"
+
+Set-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST' `
+  -filter "system.ftpServer/security/authentication/denyByFailure" `
+  -name "entryExpiration" -value "01:00:00"
